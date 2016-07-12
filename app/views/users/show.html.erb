@@ -8,4 +8,13 @@
       </h1>
     </section>
   </aside>
+  <div class="col-md-8">
+    <% if @user.commutes.any? %>
+      <h3>Commutes (<%= @user.commutes.count %>)</h3>
+      <ol class="commutes">
+        <%= render @commutes %>
+      </ol>
+      <%= will_paginate @commutes %>
+    <% end %>
+  </div>
 </div>

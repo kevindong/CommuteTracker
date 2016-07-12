@@ -1,0 +1,12 @@
+<li id="commute-<%= commute.id %>">
+  <%= link_to gravatar_for(commute.user, size: 50), commute.user %>
+  <span class="user"><%= link_to commute.user.name, commute.user %></span>
+  <br>
+  <span class="times">Times: <%= commute.starttime.localtime.strftime("%H:%M") %>—<%= commute.endtime.localtime.strftime("%H:%M") %></span>
+  <br>
+  <span class="duration">Duration: <%= ((commute.endtime - commute.starttime) / 1.minute).round %> minutes</span>
+  
+  <span class="timestamp">
+    Commuted <%= time_ago_in_words(commute.endtime) %> ago.
+  </span>
+</li>
