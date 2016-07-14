@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @commutes = @user.commutes.paginate(page: params[:page])
+    @status = @user.hasActiveCommute
   end
   
   def create
