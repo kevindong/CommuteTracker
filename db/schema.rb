@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714014124) do
+ActiveRecord::Schema.define(version: 20160715024856) do
 
   create_table "commutes", force: :cascade do |t|
     t.integer  "user_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160714014124) do
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
     t.boolean  "hasActiveCommute",  default: false
+    t.integer  "currentCommute"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

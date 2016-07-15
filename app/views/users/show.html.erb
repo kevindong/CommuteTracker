@@ -10,9 +10,10 @@
     <section>
       <% if @status == true %>
         You have an active commute. Want to stop it?
+        <%= button_to("Stop Commute", { :action => 'endcommute', :controller => :commutes } )%>
       <% else %>
         You don't have an active commute. Want to start one?
-        <%= button_to("Test", { :action => 'create', :controller => :commutes } )%>
+        <%= button_to("Start Commute", { :action => 'startcommute', :controller => :commutes } )%>
       <% end %>
     </section>
   </aside>

@@ -4,10 +4,16 @@ class Commute < ApplicationRecord
   default_scope -> { order(starttime: :desc) }
   
   def startcommute
+    if user.hasActiveCommute == true
+      raise "Current user already has an active commute."
+    end
     self.starttime = Time.now
   end
   
   def endcommute
+    if user.hasActiveCommute = false
+      raise "Current user does not have an active commute."
+    end
     self.endtime = Time.now
   end
 end
