@@ -23,7 +23,4 @@ class CommutesController < ApplicationController
     current_user.save
     redirect_to root_url
   end
-  
-  def show
-    @user = User.find(params[:id])
 end
