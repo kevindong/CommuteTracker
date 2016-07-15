@@ -1,7 +1,13 @@
 class CommutesController < ApplicationController
   def startcommute
     @commute = current_user.commutes.build()
-    @commute.startcommute
+    begin
+      @commute.startcommute
+    rescue
+      flash[:error] = "An error occured. Do you already have a commute active?"
+      @commute.destroy
+      return redirect_to root_url
+    end
     if @commute.save
       current_user.hasActiveCommute = true
       current_user.currentCommute = @commute.id
