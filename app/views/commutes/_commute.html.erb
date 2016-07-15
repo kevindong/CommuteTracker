@@ -1,8 +1,9 @@
 <li id="commute-<%= commute.id %>">
+  <% Time.zone = 'Eastern Time (US & Canada)' %>
   <%= link_to gravatar_for(commute.user, size: 50), commute.user %>
   <span class="user"><%= link_to commute.user.name, commute.user %></span>
   <br>
-  <span class="times">Times: <%= commute.starttime.localtime.strftime("%H:%M") %>—<%= commute.endtime.localtime.strftime("%H:%M") unless commute.endtime.nil? %></span>
+  <span class="times">Times: <%= commute.starttime.in_time_zone.strftime("%H:%M") %> ET—<%= commute.endtime.in_time_zone.strftime("%H:%M") unless commute.endtime.nil? %> ET</span>
   <br>
   <span class="duration">Duration: <%= ((commute.endtime - commute.starttime) / 1.minute).round unless commute.endtime.nil? %> minutes</span>
   
