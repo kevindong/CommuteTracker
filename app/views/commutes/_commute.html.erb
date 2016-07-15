@@ -3,13 +3,13 @@
   <%= link_to gravatar_for(commute.user, size: 50), commute.user %>
   <span class="user"><%= link_to commute.user.name, commute.user %></span>
   <br>
-  <span class="times">Times: <%= commute.starttime.in_time_zone.strftime("%H:%M") %> ET—<%= commute.endtime.in_time_zone.strftime("%H:%M") unless commute.endtime.nil? %> ET</span>
+  <span class="times">Times: <%= commute.starttime.in_time_zone.strftime("%H:%M") %> ET—<%= commute.endtime.in_time_zone.strftime("%H:%M") + ' ET' unless commute.endtime.nil? %></span>
   <br>
-  <span class="duration">Duration: <%= ((commute.endtime - commute.starttime) / 1.minute).round unless commute.endtime.nil? %> minutes</span>
+  <span class="duration"><%= 'Duration: ' + ((commute.endtime - commute.starttime) / 1.minute).round.to_s + ' minutes' unless commute.endtime.nil? %></span>
   
   <span class="timestamp">
     <% if commute.endtime.nil? %>
-      Started commuting <%= time_ago_in_words(commute.starttime) %>
+      Started commuting <%= time_ago_in_words(commute.starttime) %> ago.
     <% else %>
       Commuted <%= time_ago_in_words(commute.endtime) %> ago.
     <% end %>
