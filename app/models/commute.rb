@@ -11,8 +11,10 @@ class Commute < ApplicationRecord
   end
   
   def endcommute
-    if user.hasActiveCommute = false
+    if user.hasActiveCommute == false
       raise "Current user does not have an active commute."
+    elsif user.currentCommute != self.id
+      raise "Current commute does not belong to current user."
     end
     self.endtime = Time.now
   end

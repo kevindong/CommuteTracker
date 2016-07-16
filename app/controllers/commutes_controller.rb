@@ -22,7 +22,12 @@ class CommutesController < ApplicationController
   
   def endcommute
     @commute = Commute.find_by_id(User.find_by_id(params[:id]).currentCommute)
-    @commute.endcommute
+    begin
+      @commute.endcommute
+    rescue
+      flash[:error] = "An error occured. Are you trying to end someone else's commute?"
+      return redirect_to root_url
+    end
     if @commute.save
       current_user.hasActiveCommute = false
       current_user.currentCommute = nil

@@ -7,15 +7,17 @@
         <%= @user.name %>
       </h1>
     </section>
-    <section>
-      <% if @status == true %>
-        You have an active commute. Want to stop it?
-        <%= button_to("Stop Commute", { :action => 'endcommute', :controller => :commutes } )%>
-      <% else %>
-        You don't have an active commute. Want to start one?
-        <%= button_to("Start Commute", { :action => 'startcommute', :controller => :commutes } )%>
-      <% end %>
-    </section>
+    <% if @user.id == current_user.id %>
+      <section>
+        <% if @status == true %>
+          You have an active commute. Want to stop it?
+          <%= button_to("Stop Commute", { :action => 'endcommute', :controller => :commutes } )%>
+        <% else %>
+          You don't have an active commute. Want to start one?
+          <%= button_to("Start Commute", { :action => 'startcommute', :controller => :commutes } )%>
+        <% end %>
+      </section>
+    <% end %>
   </aside>
   <div class="col-md-8">
     <% if @user.commutes.any? %>
