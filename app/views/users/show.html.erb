@@ -9,6 +9,10 @@
     </section>
     <% if @user.id == current_user.id %>
       <section>
+        <input type="text" id="lat"><br>
+        <input type="text" id="lon"><br>
+        <button onclick="getGeo()">Click to get geolocation info.</button><br><br>
+        
         <% if @status == true %>
           You have an active commute. Want to stop it?
           <%= button_to("Stop Commute", { :action => 'endcommute', :controller => :commutes } )%>

@@ -10,14 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715024856) do
+ActiveRecord::Schema.define(version: 20160718014152) do
 
   create_table "commutes", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "starttime"
     t.datetime "endtime"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.decimal  "startLat",   precision: 15, scale: 10
+    t.decimal  "startLon",   precision: 15, scale: 10
+    t.decimal  "endLat",     precision: 15, scale: 10
+    t.decimal  "endLon",     precision: 15, scale: 10
     t.index ["user_id", "created_at"], name: "index_commutes_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_commutes_on_user_id"
   end
