@@ -5,8 +5,18 @@
   <br>
   <span class="times">Times: <%= commute.starttime.in_time_zone.strftime("%H:%M") %> ET—<%= commute.endtime.in_time_zone.strftime("%H:%M") + ' ET' unless commute.endtime.nil? %></span>
   <br>
-  <span class="duration"><%= 'Duration: ' + ((commute.endtime - commute.starttime) / 1.minute).round.to_s + ' minutes' unless commute.endtime.nil? %></span>
-  
+  <% unless commute.endtime.nil? %>
+    <span class="duration"><%= 'Duration: ' + ((commute.endtime - commute.starttime) / 1.minute).round.to_s + ' minutes' %></span>
+    <br>
+  <% end %>
+  <% unless commute.startLat.nil? %>
+    <span class="startLocation"><%= 'Began at: ' + commute.startLat.round(5).to_s + ' ' + commute.startLon.round(5).to_s %></span>
+    <br>
+  <% end %>
+  <% unless commute.endLat.nil? %>
+    <span class="endLocation"><%= 'Ended at: ' + commute.endLat.round(5).to_s + ' ' + commute.endLon.round(5).to_s %></span>
+    <br>
+  <% end %>
   <span class="timestamp">
     <% if commute.endtime.nil? %>
       Started commuting <%= time_ago_in_words(commute.starttime) %> ago.

@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 20160718014152) do
     t.integer  "user_id"
     t.datetime "starttime"
     t.datetime "endtime"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.decimal  "startLat",   precision: 15, scale: 10
-    t.decimal  "startLon",   precision: 15, scale: 10
-    t.decimal  "endLat",     precision: 15, scale: 10
-    t.decimal  "endLon",     precision: 15, scale: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float    "startLat"
+    t.float    "startLon"
+    t.float    "endLat"
+    t.float    "endLon"
     t.index ["user_id", "created_at"], name: "index_commutes_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_commutes_on_user_id"
   end
