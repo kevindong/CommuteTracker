@@ -14,7 +14,9 @@
     <br>
   <% end %>
   <% unless commute.endLat.nil? %>
-    <span class="endLocation">End at: <%= link_to commute.endLat.round(5).to_s + ' ' + commute.endLon.round(5).to_s, "https://maps.google.com/maps?=12&t=m&q=loc:" + commute.endLat.round(5).to_s + '+' + commute.endLon.round(5).to_s %>    <br>
+    <span class="endLocation">End at: <%= link_to commute.endLat.round(5).to_s + ' ' + commute.endLon.round(5).to_s, "https://maps.google.com/maps?=12&t=m&q=loc:" + commute.endLat.round(5).to_s + '+' + commute.endLon.round(5).to_s %>   
+    <br>
+    <span class="distanceTraveled">Distance traveled: <%=  Geokit::LatLng.new(commute.startLat.round(5).to_s, commute.startLon.round(5).to_s).distance_from(Geokit::LatLng.new(commute.endLat.round(5).to_s, commute.endLon.round(5).to_s)).round(2) %> miles</span>
   <% end %>
   <span class="timestamp">
     <% if commute.endtime.nil? %>

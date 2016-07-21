@@ -66,6 +66,7 @@ GEM
       i18n (~> 0.5)
     ffi (1.9.10)
     formatador (0.2.5)
+    geokit (1.10.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     guard (2.13.0)
@@ -209,6 +210,7 @@ DEPENDENCIES
   byebug (= 9.0.0)
   coffee-rails (= 4.2.1)
   faker (= 1.6.3)
+  geokit
   guard (= 2.13.0)
   guard-minitest (= 2.4.4)
   jbuilder (= 2.4.1)
