@@ -10,12 +10,11 @@
     <br>
   <% end %>
   <% unless commute.startLat.nil? %>
-    <span class="startLocation"><%= 'Began at: ' + commute.startLat.round(5).to_s + ' ' + commute.startLon.round(5).to_s %></span>
+    <span class="startLocation">Begin at: <%= link_to commute.startLat.round(5).to_s + ' ' + commute.startLon.round(5).to_s, "https://maps.google.com/maps?=12&t=m&q=loc:" + commute.startLat.round(5).to_s + '+' + commute.startLon.round(5).to_s %>
     <br>
   <% end %>
   <% unless commute.endLat.nil? %>
-    <span class="endLocation"><%= 'Ended at: ' + commute.endLat.round(5).to_s + ' ' + commute.endLon.round(5).to_s %></span>
-    <br>
+    <span class="endLocation">End at: <%= link_to commute.endLat.round(5).to_s + ' ' + commute.endLon.round(5).to_s, "https://maps.google.com/maps?=12&t=m&q=loc:" + commute.endLat.round(5).to_s + '+' + commute.endLon.round(5).to_s %>    <br>
   <% end %>
   <span class="timestamp">
     <% if commute.endtime.nil? %>
