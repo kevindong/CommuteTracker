@@ -1,6 +1,5 @@
 <li id="commute-<%= commute.id %>">
   <% Time.zone = 'Eastern Time (US & Canada)' %>
-  <% commute.startLat = commute.startLon = commute.endLat = commute.endLon = 0 unless current_user.id == params[:id].to_i %>
   <% startLat = commute.startLat.round(5).to_s unless commute.startLat.nil? %>
   <% startLon = commute.startLon.round(5).to_s unless commute.startLon.nil? %>
   <% endLat = commute.endLat.round(5).to_s unless commute.endLat.nil? %>
@@ -13,13 +12,15 @@
     <span class="duration"><%= 'Duration: ' + ((commute.endtime - commute.starttime) / 1.minute).round.to_s + ' minutes' %></span>
     <br>
   <% end %>
-  <% unless commute.startLat.nil? || commute.startLat == 0 %>
+  <% unless commute.startLat.nil? || commute.startLon.nil? %>
     <span class="startLocation">Begin at: <%= link_to startLat + ' ' + startLon, "https://maps.google.com/maps?=12&t=m&q=loc:" + startLat + '+' + startLon %></span>
     <br>
   <% end %>
-  <% unless commute.endLat.nil? || commute.startLat == 0 %>
+  <% unless commute.endLat.nil? || commute.endLon.nil? %>
     <span class="endLocation">End at: <%= link_to endLat + ' ' + endLon, "https://maps.google.com/maps?=12&t=m&q=loc:" + endLat + '+' + endLon %></span>
     <br>
+  <% end %>
+  <% unless commute.startLat.nil? || commute.startLon.nil? || commute.endLat.nil? || commute.endLon.nil? %>
     <span class="distanceTraveled">Distance traveled: <%=  Geokit::LatLng.new(startLat, startLon).distance_from(Geokit::LatLng.new(endLat, endLon)).round(2) %> miles</span>
   <% end %>
   <span class="timestamp">

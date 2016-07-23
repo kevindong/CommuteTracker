@@ -8,8 +8,8 @@ class Commute < ApplicationRecord
       raise "Current user already has an active commute."
     end
     self.starttime = Time.now
-    self.startLat = lat.to_f
-    self.startLon = lon.to_f
+    self.startLat = is_float(lat) ? lat.to_f : nil
+    self.startLon = is_float(lon) ? lon.to_f : nil
   end
   
   def endcommute(lat, lon)
@@ -19,7 +19,17 @@ class Commute < ApplicationRecord
       raise "Current commute does not belong to current user."
     end
     self.endtime = Time.now
-    self.endLat = lat.to_f
-    self.endLon = lon.to_f
+    self.endLat = is_float(lat) ? lat.to_f : nil
+    self.endLon = is_float(lon) ? lon.to_f : nil
+  end
+  
+  private
+  def is_float(input)
+    begin
+      input.to_f
+      return true unless input.blank?
+    rescue
+      return false
+    end
   end
 end
