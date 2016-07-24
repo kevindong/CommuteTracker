@@ -21,7 +21,10 @@
     <br>
   <% end %>
   <% unless commute.startLat.nil? || commute.startLon.nil? || commute.endLat.nil? || commute.endLon.nil? %>
-    <span class="distanceTraveled">Distance traveled: <%=  Geokit::LatLng.new(startLat, startLon).distance_from(Geokit::LatLng.new(endLat, endLon)).round(2) %> miles</span>
+    <% distanceTraveled = Geokit::LatLng.new(startLat, startLon).distance_from(Geokit::LatLng.new(endLat, endLon)) %>
+    <span class="distanceTraveled">Distance traveled: <%= distanceTraveled.round(2) %> miles</span>
+    <br>
+    <span class="speed">Speed: <%= (distanceTraveled / ((commute.endtime - commute.starttime) / 1.hour)).round(2) %> mph</span>
   <% end %>
   <span class="timestamp">
     <% if commute.endtime.nil? %>
