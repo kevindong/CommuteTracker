@@ -6,21 +6,23 @@
   <% endLon = commute.endLon.round(5).to_s unless commute.endLon.nil? %>
   <span class="id"><strong>Commute #<%= commute.id %></strong></span>
   <br>
-  <span class="times">Times: <%= commute.starttime.in_time_zone.strftime("%H:%M") %> ET—<%= commute.endtime.in_time_zone.strftime("%H:%M") + ' ET' unless commute.endtime.nil? %></span>
+  <span class="date">Date: <%= commute.starttime.in_time_zone.strftime("%m/%d/%Y") %></span>
+  <br>
+  <span class="times">Times: <%= commute.starttime.in_time_zone.strftime("%I:%M %p") %>—<%= commute.endtime.in_time_zone.strftime("%I:%M %p") unless commute.endtime.nil? %></span>
   <br>
   <% unless commute.endtime.nil? %>
     <span class="duration"><%= 'Duration: ' + ((commute.endtime - commute.starttime) / 1.minute).round.to_s + ' minutes' %></span>
     <br>
   <% end %>
-  <% unless commute.startLat.nil? || commute.startLon.nil? %>
+  <% unless startLat.nil? || startLon.nil? %>
     <span class="startLocation">Begin at: <%= link_to startLat + ' ' + startLon, "https://maps.google.com/maps?=12&t=m&q=loc:" + startLat + '+' + startLon %></span>
     <br>
   <% end %>
-  <% unless commute.endLat.nil? || commute.endLon.nil? %>
+  <% unless endLat.nil? || endLon.nil? %>
     <span class="endLocation">End at: <%= link_to endLat + ' ' + endLon, "https://maps.google.com/maps?=12&t=m&q=loc:" + endLat + '+' + endLon %></span>
     <br>
   <% end %>
-  <% unless commute.startLat.nil? || commute.startLon.nil? || commute.endLat.nil? || commute.endLon.nil? %>
+  <% unless startLat.nil? || startLon.nil? || endLat.nil? || endLon.nil? %>
     <% distanceTraveled = Geokit::LatLng.new(startLat, startLon).distance_from(Geokit::LatLng.new(endLat, endLon)) %>
     <span class="distanceTraveled">Distance traveled: <%= distanceTraveled.round(2) %> miles</span>
     <br>
