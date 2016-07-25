@@ -29,14 +29,10 @@ class Commute < ApplicationRecord
   
   private
   def is_float(input)
-    if (input.nil? || input.blank?)
-      return false
-    end
-    if (input.is_a? Float)
+    begin
+      Float(input)
       return true
-    elsif (input.to_f != 0.0)
-      return true
-    else
+    rescue
       return false
     end
   end
