@@ -78,6 +78,13 @@ p {
   };
 }
 
+.navbar-inverse .navbar-nav > li > a {
+	color: white;
+    &:hover {
+  	  text-decoration: underline;
+    };
+}
+
 /* sidebar */
 
 aside {
