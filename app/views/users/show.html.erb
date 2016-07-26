@@ -12,20 +12,20 @@
         <% if @status == true %>
           You have an active commute. Want to stop it?
           <hr>
-          <button onclick="getGeo()">Click to fill in geolocation info.</button><br><br>
+          <button class="btn btn-secondary" onclick="getGeo()">Click to fill in geolocation info.</button><br><br>
           <%= form_tag("/commutes/endcommute", method: "post") do %>
             <%= text_field_tag 'lat', nil, placeholder: "Latitude" %>
             <%= text_field_tag 'lon', nil, placeholder: "Longitude" %>
-            <%= submit_tag "End Commute" %>
+            <%= submit_tag "End Commute", class: "btn btn-primary" %>
           <% end %>
         <% else %>
           You don't have an active commute. Want to start one?
           <hr>
-          <button onclick="getGeo()">Click to fill in geolocation info.</button><br><br>
+          <button class="btn btn-secondary" onclick="getGeo()">Click to fill in geolocation info.</button><br><br>
           <%= form_tag("/commutes/startcommute", method: "post") do %>
             <%= text_field_tag 'lat', nil, placeholder: "Latitude" %>
             <%= text_field_tag 'lon', nil, placeholder: "Longitude" %>
-            <%= submit_tag "Start Commute" %>
+            <%= submit_tag "Start Commute", class: "btn btn-primary" %>
           <% end %>
         <% end %>
       </section>

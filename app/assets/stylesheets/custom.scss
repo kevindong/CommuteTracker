@@ -132,7 +132,10 @@ input, textarea, select, .uneditable-input {
 }
 
 input {
-  height: auto !important;
+  height: auto;
+  &[type="submit"] {
+	  height: 6em;
+  }
 }
 
 #error_explanation {
@@ -162,6 +165,11 @@ input {
 #session_remember_me {
   width: auto;
   margin-left: 0;
+}
+
+.btn {
+  width: 100%;
+  height: 4em;
 }
 
 /* commutes */
