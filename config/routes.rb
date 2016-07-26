@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   resources :commutes
   post 'commutes/startcommute', to: 'commutes#startcommute'
   post 'commutes/:id', to: 'commutes#endcommute'
+  delete 'commutes/:id', to: 'commutes#destroy'
 end

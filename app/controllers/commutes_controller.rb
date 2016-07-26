@@ -43,4 +43,17 @@ class CommutesController < ApplicationController
       redirect_to root_url
     end
   end
+  
+  def destroy
+    commute = Commute.find_by_id(params[:id].to_i)
+    if commute.nil?
+      flash[:error] = "The selected commute does not exist."
+    elsif (commute.user_id == current_user.id)
+      commute.destroy
+      flash[:success] = "Commute destroyed!"
+    else
+      flash[:error] = 'You\'re not authorized to delete Commute #' + commute.id.to_s
+    end
+    redirect_to root_url
+  end
 end

@@ -30,9 +30,10 @@
   <% end %>
   <span class="timestamp">
     <% if commute.endtime.nil? %>
-      Started commuting <%= time_ago_in_words(commute.starttime) %> ago.
+      Started commuting <%= time_ago_in_words(commute.starttime) %> ago. | <%= button_to("Destroy", { :action => 'destroy', :controller => :commutes } )%>
     <% else %>
-      Commuted <%= time_ago_in_words(commute.endtime) %> ago.
+      Commuted <%= time_ago_in_words(commute.endtime) %> ago. | <%= link_to "delete", commute, method: :delete, data: { confirm: "You sure?" } %>
+
     <% end %>
   </span>
 </li>
