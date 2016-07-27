@@ -49,6 +49,12 @@ class CommutesController < ApplicationController
     if commute.nil?
       flash[:error] = "The selected commute does not exist."
     elsif (commute.user_id == current_user.id)
+      current_user.hasActiveCommute = false
+      current_user.currentCommute = nil
+      if !current_user.save
+        flash[:error] = "An error occured while changing your properties."
+        redirect_to root_url
+      end
       commute.destroy
       flash[:success] = "Commute destroyed!"
     else

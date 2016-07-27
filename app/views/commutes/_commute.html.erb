@@ -31,10 +31,9 @@
   <% end %>
   <span class="timestamp">
     <% if commute.endtime.nil? %>
-      Started commuting <%= time_ago_in_words(commute.starttime) %> ago. | <%= link_to "delete", commute, method: :delete, data: { confirm: "You sure?" } %>
+      Started commuting <%= time_ago_in_words(commute.starttime) %> ago.<%= ' | ' if current_user.id == params[:id].to_i %><%= link_to "delete", commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == params[:id].to_i %>
     <% else %>
-      Commuted <%= time_ago_in_words(commute.endtime) %> ago. | <%= link_to "delete", commute, method: :delete, data: { confirm: "You sure?" } %>
-
+      Commuted <%= time_ago_in_words(commute.endtime) %> ago.<%= ' | ' if current_user.id == params[:id].to_i %><%= link_to "delete", commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == params[:id].to_i %>
     <% end %>
   </span>
 </li>
