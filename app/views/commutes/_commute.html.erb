@@ -1,5 +1,6 @@
 <li id="commute-<%= commute.id %>">
   <% Time.zone = 'Eastern Time (US & Canada)' %>
+  <% commute.startLat = commute.startLon = commute.endLat = commute.endLon = nil unless current_user.id == params[:id].to_i %>
   <% startLat = commute.startLat.round(5).to_s unless commute.startLat.nil? %>
   <% startLon = commute.startLon.round(5).to_s unless commute.startLon.nil? %>
   <% endLat = commute.endLat.round(5).to_s unless commute.endLat.nil? %>
