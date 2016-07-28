@@ -138,6 +138,11 @@ input {
   }
 }
 
+button[onclick="getGeo()"] {
+	height: 4em;
+	width: 100%;
+}
+
 #error_explanation {
   color: red;
   ul {
@@ -165,11 +170,6 @@ input {
 #session_remember_me {
   width: auto;
   margin-left: 0;
-}
-
-.btn {
-  width: 100%;
-  height: 4em;
 }
 
 /* commutes */
