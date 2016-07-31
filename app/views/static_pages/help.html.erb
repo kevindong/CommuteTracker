@@ -1,5 +1,13 @@
 <% provide(:title, "Help") %>
 <h1>Help</h1>
+
 <p>
-For help, you can contact me at <%= mail_to "commutetracker@kevindong.net" %>.
+<h2>Basics</h2>
+To start a commute, click on the "Start Commute" button. To end a commute, click on the "End Commute" button. 
+<h2>Location</h2>
+If you'd like, you can also add your current location to the commute by clicking on the "Click to fill in geolocation info" button. Location information is optional. But, to use the location functionality, both the latitude and longitude fields must be filled out. If either field is left blank, the other (filled in) field will not be processed. For security reasons, only the owner of a commute can view the coordinates. But, any logged in user can view the other details of any other user's commute (date, times, distance traveled, average speed, etc.).
+<h2>Details</h2>
+Click on the heading of a given commute to view more details about it. You will also be shown a Google Maps view of your start and end locations (if and only if you're the owner of the commute).
+<h2>Contact info if you need additional help</h2>
+For further help, you can contact me at <%= mail_to "commutetracker@kevindong.net" %>.
 </p>
