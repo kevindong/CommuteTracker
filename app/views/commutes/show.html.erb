@@ -1,0 +1,70 @@
+<div id="commute-<%= @commute.id %>">
+  <% Time.zone = 'Eastern Time (US & Canada)' %>
+  <% @commute.startLat = @commute.startLon = @commute.endLat = @commute.endLon = nil unless current_user.id == @commute.user_id %>
+  <% startLat = @commute.startLat.round(5).to_s unless @commute.startLat.nil? %>
+  <% startLon = @commute.startLon.round(5).to_s unless @commute.startLon.nil? %>
+  <% endLat = @commute.endLat.round(5).to_s unless @commute.endLat.nil? %>
+  <% endLon = @commute.endLon.round(5).to_s unless @commute.endLon.nil? %>
+  <span class="id"><strong>Commute #<%= @commute.id %></strong></span>
+  <br>
+  <span class="date">Date: <%= @commute.starttime.in_time_zone.strftime("%m/%d/%Y") %></span>
+  <br>
+  <span class="times">Times: <%= @commute.starttime.in_time_zone.strftime("%I:%M %p") %>—<%= @commute.endtime.in_time_zone.strftime("%I:%M %p") unless @commute.endtime.nil? %></span>
+  <br>
+  <% unless @commute.endtime.nil? %>
+    <span class="duration"><%= 'Duration: ' + ((@commute.endtime - @commute.starttime) / 1.minute).round.to_s + ' minutes' %></span>
+    <br>
+  <% end %>
+  <% unless startLat.nil? || startLon.nil? %>
+    <span class="startLocation">Begin at: <%= link_to startLat + ' ' + startLon, "https://maps.google.com/maps?=12&t=m&q=loc:" + startLat + '+' + startLon %></span>
+    <br>
+  <% end %>
+  <% unless endLat.nil? || endLon.nil? %>
+    <span class="endLocation">End at: <%= link_to endLat + ' ' + endLon, "https://maps.google.com/maps?=12&t=m&q=loc:" + endLat + '+' + endLon %></span>
+    <br>
+  <% end %>
+  <% unless startLat.nil? || startLon.nil? || endLat.nil? || endLon.nil? %>
+    <% distanceTraveled = Geokit::LatLng.new(startLat, startLon).distance_from(Geokit::LatLng.new(endLat, endLon)) %>
+    <span class="distanceTraveled">Distance traveled: <%= distanceTraveled.round(2) %> miles</span>
+    <br>
+    <span class="speed">Speed: <%= (distanceTraveled / ((@commute.endtime - @commute.starttime) / 1.hour)).round(2) %> mph</span>
+  <% end %>
+  <span class="timestamp">
+    <% if @commute.endtime.nil? %>
+      Started commuting <%= time_ago_in_words(@commute.starttime) %> ago.<%= ' | ' if current_user.id == @commute.user_id.to_i %><%= link_to "delete", @commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == @commute.user_id.to_i %>
+    <% else %>
+    <br>
+      Commuted <%= time_ago_in_words(@commute.endtime) %> ago.<%= ' | ' if current_user.id == @commute.user_id.to_i %><%= link_to "delete", @commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == @commute.user_id.to_i %>
+    <% end %>
+  </span>
+  <% if !startLat.nil? && !startLon.nil? && !endLat.nil? && !endLon.nil? && current_user.id == @commute.user_id %>
+  <br>
+  <div id="map">Testing</div>
+      <script>
+        function initMap() {
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: {lat: <%= (startLat.to_f + endLat.to_f)/2 %>, lng: <%= (startLon.to_f + endLon.to_f)/2 %>}
+          });
+          
+          <% if !startLat.nil? && !startLon.nil? %>
+          var start = new google.maps.Marker({
+            position: {lat: <%= startLat %>, lng: <%= startLon %>},
+            map: map,
+            label: 'Begin'
+          });
+          <% end %>
+          
+          <% if !endLat.nil? && !endLon.nil? %>
+          var end = new google.maps.Marker({
+            position: {lat: <%= endLat %>, lng: <%= endLon %>},
+            map: map,
+            label: 'End'
+          });
+          <% end %>
+        }
+      </script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaM2ojd4c9tWFZfYeNVO6dqwpheONdz2M&callback=initMap">
+      </script>
+  <% end %>
+</div>

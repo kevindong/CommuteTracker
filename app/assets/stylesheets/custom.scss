@@ -16,6 +16,8 @@ $gray-medium-light: #eaeaea;
 
 body {
 	padding-top: 60px;
+	height: 100%;
+	width: 100%;
 }
 
 section {
@@ -219,6 +221,12 @@ span.picture {
   input {
     border: 0;
   }
+}
+
+/* show commute */
+#map {
+  width: 100%;
+	height: 50em;
 }
 
 /* footer */

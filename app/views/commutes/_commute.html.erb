@@ -5,7 +5,7 @@
   <% startLon = commute.startLon.round(5).to_s unless commute.startLon.nil? %>
   <% endLat = commute.endLat.round(5).to_s unless commute.endLat.nil? %>
   <% endLon = commute.endLon.round(5).to_s unless commute.endLon.nil? %>
-  <span class="id"><strong>Commute #<%= commute.id %></strong></span>
+  <a href="/commutes/<%= commute.id %>" class="id"><strong>Commute #<%= commute.id %></strong></a>
   <br>
   <span class="date">Date: <%= commute.starttime.in_time_zone.strftime("%m/%d/%Y") %></span>
   <br>

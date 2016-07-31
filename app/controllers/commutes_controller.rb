@@ -62,4 +62,8 @@ class CommutesController < ApplicationController
     end
     redirect_to root_url
   end
+  
+  def show
+    @commute = Commute.find_by_id(params[:id].to_i)
+  end
 end
