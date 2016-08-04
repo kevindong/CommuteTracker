@@ -1,13 +1,15 @@
 <li id="commute-<%= commute.id %>">
   <% Time.zone = 'Eastern Time (US & Canada)' %>
+  <% commute.starttime = commute.starttime.in_time_zone %>
+  <% commute.endtime = commute.endtime.in_time_zone unless commute.endtime.nil? %>
   <% commute.startLat = commute.startLon = commute.endLat = commute.endLon = nil unless current_user.id == params[:id].to_i %>
   <% startLat = commute.startLat.round(5).to_s unless commute.startLat.nil? %>
   <% startLon = commute.startLon.round(5).to_s unless commute.startLon.nil? %>
   <% endLat = commute.endLat.round(5).to_s unless commute.endLat.nil? %>
   <% endLon = commute.endLon.round(5).to_s unless commute.endLon.nil? %>
   <a href="/commutes/<%= commute.id %>" class="id"><strong>Commute #<%= commute.id %></strong></a>
-  <div class="date">Date: <%= commute.starttime.in_time_zone.strftime("%m/%d/%Y") %></div>
-  <div class="times">Times: <%= commute.starttime.in_time_zone.strftime("%I:%M %p") %>—<%= commute.endtime.in_time_zone.strftime("%I:%M %p") unless commute.endtime.nil? %></div>
+  <div class="date">Date: <%= commute.starttime.strftime("%m/%d/%Y") %></div>
+  <div class="times">Times: <%= commute.starttime.strftime("%I:%M %p") %>—<%= commute.endtime.strftime("%I:%M %p") unless commute.endtime.nil? %></div>
   <% unless commute.endtime.nil? %>
     <div class="duration"><%= 'Duration: ' + ((commute.endtime - commute.starttime) / 1.minute).round.to_s + ' minutes' %></div>
   <% end %>
@@ -24,9 +26,10 @@
   <% end %>
   <div class="timestamp">
     <% if commute.endtime.nil? %>
-      Started commuting <%= time_ago_in_words(commute.starttime) %> ago.<%= ' | ' if current_user.id == params[:id].to_i %><%= link_to "delete", commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == params[:id].to_i %>
+      Started commuting <%= time_ago_in_words(commute.starttime) %> ago.
     <% else %>
-      Commuted <%= time_ago_in_words(commute.endtime) %> ago.<%= ' | ' if current_user.id == params[:id].to_i %><%= link_to "delete", commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == params[:id].to_i %>
+      Commuted <%= time_ago_in_words(commute.endtime) %> ago.
     <% end %>
+      <%= ' | ' if current_user.id == params[:id].to_i %><%= link_to "delete", commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == params[:id].to_i %>
   </div>
 </li>
