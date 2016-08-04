@@ -27,6 +27,30 @@ class Commute < ApplicationRecord
     end
   end
   
+  def startCoordsValid?
+    if (!startLat.nil? && !startLon.nil?)
+      return true
+    else
+      return false
+    end
+  end
+  
+  def endCoordsValid?
+    if (!endLat.nil? && !endLon.nil?)
+      return true
+    else
+      return false
+    end
+  end
+  
+  def allCoordsValid?
+    if (startCoordsValid? && endCoordsValid?)
+      return true
+    else
+      return false
+    end
+  end
+  
   private
   def is_float(input)
     begin

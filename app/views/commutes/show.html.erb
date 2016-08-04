@@ -13,13 +13,13 @@
   <% unless @commute.endtime.nil? %>
     <div class="duration"><%= 'Duration: ' + ((@commute.endtime - @commute.starttime) / 1.minute).round.to_s + ' minutes' %></div>
   <% end %>
-  <% unless startLat.nil? || startLon.nil? %>
+  <% if @commute.startCoordsValid? %>
     <div class="startLocation">Begin at: <%= link_to startLat + ' ' + startLon, "https://maps.google.com/maps?=12&t=m&q=loc:" + startLat + '+' + startLon %></div>
   <% end %>
-  <% unless endLat.nil? || endLon.nil? %>
+  <% if @commute.endCoordsValid? %>
     <div class="endLocation">End at: <%= link_to endLat + ' ' + endLon, "https://maps.google.com/maps?=12&t=m&q=loc:" + endLat + '+' + endLon %></div>
   <% end %>
-  <% unless startLat.nil? || startLon.nil? || endLat.nil? || endLon.nil? %>
+  <% if @commute.allCoordsValid? %>
     <% distanceTraveled = Geokit::LatLng.new(startLat, startLon).distance_from(Geokit::LatLng.new(endLat, endLon)) %>
     <div class="distanceTraveled">Distance traveled: <%= distanceTraveled.round(2) %> miles</div>
     <div class="speed">Speed: <%= (distanceTraveled / ((@commute.endtime - @commute.starttime) / 1.hour)).round(2) %> mph</div>
@@ -33,22 +33,22 @@
     <%= ' | ' if current_user.id == @commute.user_id.to_i %><%= link_to "delete", @commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == @commute.user_id.to_i %>
   </div>
   <br/>
-  <% if ((!startLat.nil? && !startLon.nil?) || (!endLat.nil? && !endLon.nil?)) && (current_user.id == @commute.user_id) %>
+  <% if ((@commute.startCoordsValid?) || (@commute.endCoordsValid?)) && (current_user.id == @commute.user_id) %>
   <div id="map">Testing</div>
       <script>
         function initMap() {
           var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 12,
-            <% if !startLat.nil? && !startLon.nil? && endLat.nil? && endLon.nil? %>
+            <% if @commute.startCoordsValid? && !@commute.endCoordsValid? %>
               center: {lat: <%= startLat %>, lng: <%= startLon %>}
-            <% elsif startLat.nil? && startLon.nil? && !endLat.nil? && !endLon.nil? %>
+            <% elsif !@commute.startCoordsValid? && @commute.endCoordsValid? %>
               center: {lat: <%= endLat %>, lng: <%= endLon %>}
             <% else %>
               center: {lat: <%= (startLat.to_f + endLat.to_f)/2 %>, lng: <%= (startLon.to_f + endLon.to_f)/2 %>}
             <% end %>
           });
           
-          <% if !startLat.nil? && !startLon.nil? %>
+          <% if @commute.startCoordsValid? %>
             var start = new google.maps.Marker({
               position: {lat: <%= startLat %>, lng: <%= startLon %>},
               map: map,
@@ -56,7 +56,7 @@
             });
           <% end %>
           
-          <% if !endLat.nil? && !endLon.nil? %>
+          <% if @commute.endCoordsValid? %>
             var end = new google.maps.Marker({
               position: {lat: <%= endLat %>, lng: <%= endLon %>},
               map: map,
@@ -64,7 +64,7 @@
             });
           <% end %>
             
-          <% if !startLat.nil? && !startLon.nil? && !endLat.nil? && !endLon.nil? %>
+          <% if @commute.allCoordsValid? %>
             var lineSymbol = {
               path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
             };

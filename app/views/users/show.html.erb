@@ -1,4 +1,13 @@
 <% provide(:title, @user.name) %>
+<%
+def latField
+  text_field_tag 'lat', nil, placeholder: "Latitude", class: "form-control"
+end
+
+def lonField
+  text_field_tag 'lon', nil, placeholder: "Longitude", class: "form-control"
+end
+%>
 <div class="row">
   <aside class="col-md-4">
     <section class="user_info">
@@ -14,8 +23,8 @@
           <hr>
           <button class="btn btn-secondary" onclick="getGeo()">Click to fill in geolocation info.</button><br><br>
           <%= form_tag("/commutes/endcommute", method: "post") do %>
-            <%= text_field_tag 'lat', nil, placeholder: "Latitude" %>
-            <%= text_field_tag 'lon', nil, placeholder: "Longitude" %>
+            <%= latField %>
+            <%= lonField %>
             <%= submit_tag "End Commute", class: "btn btn-primary" %>
           <% end %>
         <% else %>
@@ -23,8 +32,8 @@
           <hr>
           <button class="btn btn-secondary" onclick="getGeo()">Click to fill in geolocation info.</button><br><br>
           <%= form_tag("/commutes/startcommute", method: "post") do %>
-            <%= text_field_tag 'lat', nil, placeholder: "Latitude" %>
-            <%= text_field_tag 'lon', nil, placeholder: "Longitude" %>
+            <%= latField %>
+            <%= lonField %>
             <%= submit_tag "Start Commute", class: "btn btn-primary" %>
           <% end %>
         <% end %>
