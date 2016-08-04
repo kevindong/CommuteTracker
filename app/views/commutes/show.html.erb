@@ -33,29 +33,50 @@
     <%= ' | ' if current_user.id == @commute.user_id.to_i %><%= link_to "delete", @commute, method: :delete, data: { confirm: "You sure?" } if current_user.id == @commute.user_id.to_i %>
   </div>
   <br/>
-  <% if !startLat.nil? && !startLon.nil? && !endLat.nil? && !endLon.nil? && current_user.id == @commute.user_id %>
+  <% if ((!startLat.nil? && !startLon.nil?) || (!endLat.nil? && !endLon.nil?)) && (current_user.id == @commute.user_id) %>
   <div id="map">Testing</div>
       <script>
         function initMap() {
           var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 12,
-            center: {lat: <%= (startLat.to_f + endLat.to_f)/2 %>, lng: <%= (startLon.to_f + endLon.to_f)/2 %>}
+            <% if !startLat.nil? && !startLon.nil? && endLat.nil? && endLon.nil? %>
+              center: {lat: <%= startLat %>, lng: <%= startLon %>}
+            <% elsif startLat.nil? && startLon.nil? && !endLat.nil? && !endLon.nil? %>
+              center: {lat: <%= endLat %>, lng: <%= endLon %>}
+            <% else %>
+              center: {lat: <%= (startLat.to_f + endLat.to_f)/2 %>, lng: <%= (startLon.to_f + endLon.to_f)/2 %>}
+            <% end %>
           });
           
           <% if !startLat.nil? && !startLon.nil? %>
-          var start = new google.maps.Marker({
-            position: {lat: <%= startLat %>, lng: <%= startLon %>},
-            map: map,
-            label: 'Begin'
-          });
+            var start = new google.maps.Marker({
+              position: {lat: <%= startLat %>, lng: <%= startLon %>},
+              map: map,
+              label: 'Begin'
+            });
           <% end %>
           
           <% if !endLat.nil? && !endLon.nil? %>
-          var end = new google.maps.Marker({
-            position: {lat: <%= endLat %>, lng: <%= endLon %>},
-            map: map,
-            label: 'End'
-          });
+            var end = new google.maps.Marker({
+              position: {lat: <%= endLat %>, lng: <%= endLon %>},
+              map: map,
+              label: 'End'
+            });
+          <% end %>
+            
+          <% if !startLat.nil? && !startLon.nil? && !endLat.nil? && !endLon.nil? %>
+            var lineSymbol = {
+              path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+            };
+
+            var line = new google.maps.Polyline({
+              path: [{lat: <%= startLat %>, lng: <%= startLon %>}, {lat: <%= endLat %>, lng: <%= endLon %>}],
+              icons: [{
+                icon: lineSymbol,
+                offset: '100%'
+              }],
+              map: map
+            });
           <% end %>
         }
       </script>
