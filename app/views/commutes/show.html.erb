@@ -8,6 +8,7 @@
   <% endLat = @commute.endLat.round(5).to_s unless @commute.endLat.nil? %>
   <% endLon = @commute.endLon.round(5).to_s unless @commute.endLon.nil? %>
   <div class="id"><strong>Commute #<%= @commute.id %></strong></div>
+  <div class="owner">Owner: <%= User.find_by_id(@commute.user_id).name%></div>
   <div class="date">Date: <%= @commute.starttime.strftime("%m/%d/%Y") %></div>
   <div class="times">Times: <%= @commute.starttime.strftime("%I:%M %p") %>—<%= @commute.endtime.strftime("%I:%M %p") unless @commute.endtime.nil? %></div>
   <% unless @commute.endtime.nil? %>
