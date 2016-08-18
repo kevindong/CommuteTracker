@@ -1,8 +1,9 @@
 class CommutesController < ApplicationController
   def startcommute
+    debugger
     @commute = current_user.commutes.build()
     begin
-      @commute.startcommute(params[:lat], params[:lon])
+      @commute.startcommute(params[:routeId])
     rescue
       flash[:error] = "An error occured. Do you already have a commute active?"
       @commute.destroy
@@ -23,7 +24,7 @@ class CommutesController < ApplicationController
   def endcommute
     @commute = Commute.find_by_id(current_user.currentCommute)
     begin
-      @commute.endcommute(params[:lat], params[:lon])
+      @commute.endcommute(params[:routeId])
     rescue
       flash[:error] = "An error occured. Are you trying to end someone else's commute?"
       return redirect_to root_url

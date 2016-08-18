@@ -1,13 +1,4 @@
 <% provide(:title, @user.name) %>
-<%
-def latField
-  text_field_tag 'lat', nil, placeholder: "Latitude", class: "form-control"
-end
-
-def lonField
-  text_field_tag 'lon', nil, placeholder: "Longitude", class: "form-control"
-end
-%>
 <div class="row">
   <aside class="col-md-4">
     <section class="user_info">
@@ -21,19 +12,22 @@ end
         <% if @status == true %>
           You have an active commute. Want to stop it?
           <hr>
-          <button class="btn btn-secondary" onclick="getGeo()">Click to fill in geolocation info.</button><br><br>
           <%= form_tag("/commutes/endcommute", method: "post") do %>
-            <%= latField %>
-            <%= lonField %>
             <%= submit_tag "End Commute", class: "btn btn-primary" %>
           <% end %>
         <% else %>
-          You don't have an active commute. Want to start one?
+          <button class="btn btn-secondary" data-toggle="collapse" data-target="#newRoute">New Route?</button></br></br>
+          <%= form_tag("/routes/createroute", method: "post", id: "newRoute", class: "collapse") do %>
+            <%= text_field_tag 'name', nil, placeholder: "Name/Description", class: "form-control" %>
+            <%= text_field_tag 'startLat', nil, placeholder: "Start Latitude", class: "form-control" %>
+            <%= text_field_tag 'startLon', nil, placeholder: "Start Longitude", class: "form-control" %>
+            <%= text_field_tag 'endLat', nil, placeholder: "End Latitude", class: "form-control" %>
+            <%= text_field_tag 'endLon', nil, placeholder: "End Longitude", class: "form-control" %>
+            <%= submit_tag "Create Route", class: "btn btn-primary" %>
+          <% end %>
           <hr>
-          <button class="btn btn-secondary" onclick="getGeo()">Click to fill in geolocation info.</button><br><br>
+          You don't have an active commute. Want to start one?</br></br>
           <%= form_tag("/commutes/startcommute", method: "post") do %>
-            <%= latField %>
-            <%= lonField %>
             <%= submit_tag "Start Commute", class: "btn btn-primary" %>
           <% end %>
         <% end %>

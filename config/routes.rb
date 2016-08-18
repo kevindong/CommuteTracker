@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   post 'commutes/startcommute', to: 'commutes#startcommute'
   post 'commutes/:id', to: 'commutes#endcommute'
   delete 'commutes/:id', to: 'commutes#destroy'
+  post 'routes/createroute', to: 'routes#createroute'
 end

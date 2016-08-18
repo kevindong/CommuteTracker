@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718014152) do
+ActiveRecord::Schema.define(version: 20160818212143) do
 
   create_table "commutes", force: :cascade do |t|
     t.integer  "user_id"
@@ -18,12 +18,20 @@ ActiveRecord::Schema.define(version: 20160718014152) do
     t.datetime "endtime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "created_at"], name: "index_commutes_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_commutes_on_user_id"
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.integer  "user_id"
     t.float    "startLat"
     t.float    "startLon"
     t.float    "endLat"
     t.float    "endLon"
-    t.index ["user_id", "created_at"], name: "index_commutes_on_user_id_and_created_at"
-    t.index ["user_id"], name: "index_commutes_on_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.index ["user_id"], name: "index_routes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
